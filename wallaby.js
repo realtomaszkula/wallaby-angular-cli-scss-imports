@@ -1,4 +1,5 @@
 var wallabyWebpack = require('wallaby-webpack');
+var LoaderOptionsPlugin = require('webpack').LoaderOptionsPlugin;
 var path = require('path');
 
 var compilerOptions = Object.assign(
@@ -31,7 +32,17 @@ module.exports = function (wallaby) {
         path.join(wallaby.projectCacheDir, 'src/app'),
         path.join(wallaby.projectCacheDir, 'src')
       ]
-    }
+    },
+
+    plugins: [new LoaderOptionsPlugin({
+      options: {
+        sassLoader: {
+          includePaths: [
+            "./src/some-styles"
+          ]
+        }
+      }
+    })]
   });
 
   return {
