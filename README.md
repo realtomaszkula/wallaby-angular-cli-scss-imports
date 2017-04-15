@@ -1,28 +1,42 @@
-# WallabyAngularScssImports
+# Wallabyjs Issue
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+https://github.com/angular/angular-cli/wiki/stories-global-styles
+"In Sass and Stylus you can also make use of the includePaths functionality for both component and global styles, which allows you to add extra base paths that will be checked for imports."
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+[.angular-cli.json](.angular-cli.json)
+```javascript
+"stylePreprocessorOptions": {
+  "includePaths": [
+    "some-styles"
+  ]
+}
+```
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+[src/some-styles/mixins](src/some-styles/mixins.scss)
+```css
+@mixin red {
+  color: red;
+}
+```
 
-## Running unit tests
+[ src/app/app.component.scss ](src/app/app.component.scss)
+```css
+@import 'mixins'
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+.red {
+  @include red();
+}
+```
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# Wallaby.js Console Output
+​​[Error] Runtime error: Uncaught Error: Module build failed: ​​
+​​[Error] @import 'mixins';​​
+​​[Error] ^​​
+​​[Error]       File to import not found or unreadable: mixins.​​
+​​[Error] Parent style sheet: stdin​​
+​​[Error]       in ./src/app/app.component.scss (line 1, column 1)​​
+​​[Error] at http://localhost:38785/____wallaby-bundle.js?1492263222882&wallabyFileId=bundle:18140​​
